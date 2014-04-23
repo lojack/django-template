@@ -1,33 +1,14 @@
-"""
-Django settings for {{ project_name }} project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/{{ docs_version }}/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_PATH = os.path.split(os.path.abspath(os.path.dirname(__file__)))[0]
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/{{ docs_version }}/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '{{ secret_key }}'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -36,6 +17,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    '{{ project_name }}',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,32 +34,33 @@ ROOT_URLCONF = '{{ project_name }}.urls'
 
 WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/#databases
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_PATH, "templates"),
+)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE':'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dev',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '5432',
     }
 }
-
-# Internationalization
-# https://docs.djangoproject.com/en/{{ docs_version }}/topics/i18n/
-
+LANGUAGES = (
+    ('en-us', 'English'),
+)
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'America/New_York'
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
+SITE_ID=1
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/{{ docs_version }}/howto/static-files/
+STATIC_ROOT = os.path.join(PROJECT_PATH, "static")
+STATIC_URL = "/static/"
 
-STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(PROJECT_PATH, "media")
+MEDIA_URL = "/media/"
